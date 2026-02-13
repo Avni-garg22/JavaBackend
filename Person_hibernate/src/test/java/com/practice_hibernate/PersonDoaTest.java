@@ -28,10 +28,10 @@ public class PersonDoaTest {
     public void testInsertPerson() {
         Person p = new Person();
         p.setId(1);
-        p.setName("Yash");
-        p.setDob("01/07/2004");
-        p.setAddress("Rohtak");
-        p.setPincode(124001);
+        p.setName("Avni");
+        p.setDob("22/11/2002");
+        p.setAddress("Haryana");
+        p.setPincode(136026);
 
         String res = dao.insertPerson(p);
         assertEquals("Data inserted", res);
