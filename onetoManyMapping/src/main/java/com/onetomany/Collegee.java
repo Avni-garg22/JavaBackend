@@ -4,6 +4,7 @@ package com.onetomany;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -14,7 +15,7 @@ public class Collegee {
 	private String name;
 	private String location;
 	private String pincode;
-	@OneToMany
+	@OneToMany(fetch=FetchType.EAGER)
 	private List<Studentt> student;
 	
 	public List<Studentt> getS() {
