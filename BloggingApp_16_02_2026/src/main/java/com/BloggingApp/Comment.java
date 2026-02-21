@@ -3,29 +3,30 @@ package com.BloggingApp;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "comments")
 public class Comment {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String content;
+    private String createdAt;
+    @ManyToOne
+    private Post post;
+    @ManyToOne
+    private Users author;
 
-	private String content;
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-	@ManyToOne
-	private Post post;
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 
-	@ManyToOne
-	private User author;
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
+    public Post getPost() { return post; }
+    public void setPost(Post post) { this.post = post; }
 
-	public Comment(String content, Post post, User author) {
-		this.content = content;
-		this.post = post;
-		this.author = author;
-	}
-	
-	public String getContent() {
-	    return content;
-	}
+    public Users getAuthor() { return author; }
+    public void setAuthor(Users author) { this.author = author; }
 }

@@ -5,162 +5,42 @@ import javax.persistence.*;
 
 import com.BloggingApp.Comment;
 import com.BloggingApp.Post;
-import com.BloggingApp.User;
+import com.BloggingApp.Users;
 
-import java.util.List;
 import java.util.Scanner;
 
-public class App {
-
-    private static EntityManagerFactory emf =
-            Persistence.createEntityManagerFactory("postgres");
-
-    private static EntityManager em = emf.createEntityManager();
-
+public class App{
     public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("postgres");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction et = em.getTransaction();
 
-        Scanner sc = new Scanner(System.in);
-        int choice;
+        Users u1 = new Users();
+        u1.setName("Avni");
+        u1.setPassword("123avni");
+        u1.setEmail("avi123@gmail.com");
 
-        do {
-            System.out.println("\n===== BLOG MENU =====");
-            System.out.println("1. Register User");
-            System.out.println("2. Create Post");
-            System.out.println("3. Add Comment");
-            System.out.println("4. View All Posts");
-            System.out.println("5. View Comments of Post");
-            System.out.println("0. Exit");
-            System.out.print("Enter choice: ");
+        Post p1 = new Post();
+        p1.setTitle("Java Learn");
+        p1.setContent("Advance java is Interesting!!");
+        p1.setCreatedAt("22-11-2025");
+        p1.setUpdatedAt("16-02-2026");
+        p1.setAuthor(u1);
 
-            choice = sc.nextInt();
-            sc.nextLine(); 
+        Comment c1 = new Comment();
+        c1.setContent("great-post!");
+        c1.setCreatedAt("16-02-2026");
+        c1.setPost(p1);
+        c1.setAuthor(u1);
 
-            switch (choice) {
-                case 1:
-                    registerUser(sc);
-                    break;
-                case 2:
-                    createPost(sc);
-                    break;
-                case 3:
-                    addComment(sc);
-                    break;
-                case 4:
-                    viewPosts();
-                    break;
-                case 5:
-                    viewComments(sc);
-                    break;
-                case 0:
-                    System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid choice!");
-            }
-
-        } while (choice != 0);
+        et.begin();
+        em.persist(u1);
+        em.persist(p1);
+        em.persist(c1);
+        et.commit();
 
         em.close();
         emf.close();
-    }
-
-    
-
-    private static void registerUser(Scanner sc) {
-        System.out.print("Enter name: ");
-        String name = sc.nextLine();
-
-        System.out.print("Enter email: ");
-        String email = sc.nextLine();
-
-        System.out.print("Enter password: ");
-        String password = sc.nextLine();
-
-        User user = new User(name, password, email);
-
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
-
-        System.out.println("Registered Successfully!");
-    }
-
-    private static void createPost(Scanner sc) {
-        System.out.print("Enter User ID: ");
-        int userId = sc.nextInt();
-        sc.nextLine();
-
-        User user = em.find(User.class, userId);
-
-        if (user == null) {
-            System.out.println("User not found!");
-            return;
-        }
-
-        System.out.print("Enter title: ");
-        String title = sc.nextLine();
-
-        System.out.print("Enter content: ");
-        String content = sc.nextLine();
-
-        Post post = new Post(title, content, user);
-
-        em.getTransaction().begin();
-        em.persist(post);
-        em.getTransaction().commit();
-
-        System.out.println("Post Created!");
-    }
-
-    private static void addComment(Scanner sc) {
-        System.out.print("Enter Post ID: ");
-        int postId = sc.nextInt();
-
-        System.out.print("Enter User ID: ");
-        int userId = sc.nextInt();
-        sc.nextLine();
-
-        Post post = em.find(Post.class, postId);
-        User user = em.find(User.class, userId);
-
-        if (post == null || user == null) {
-            System.out.println("Invalid Post or User!");
-            return;
-        }
-
-        System.out.print("Enter comment: ");
-        String content = sc.nextLine();
-
-        Comment comment = new Comment(content, post, user);
-
-        em.getTransaction().begin();
-        em.persist(comment);
-        em.getTransaction().commit();
-
-        System.out.println("Comment Added!");
-    }
-
-    private static void viewPosts() {
-        List<Post> posts = em.createQuery("from Post", Post.class)
-                             .getResultList();
-
-        for (Post p : posts) {
-            System.out.println("\nPost ID: " + p.getId());
-            System.out.println("Title: " + p.getTitle());
-        }
-    }
-
-    private static void viewComments(Scanner sc) {
-        System.out.print("Enter Post ID: ");
-        int postId = sc.nextInt();
-
-        List<Comment> comments = em.createQuery(
-                "from Comment where post.id = :pid", Comment.class)
-                .setParameter("pid", postId)
-                .getResultList();
-
-        for (Comment c : comments) {
-            System.out.println("Comment: " + c.getContent());
-        }
+        
     }
 }

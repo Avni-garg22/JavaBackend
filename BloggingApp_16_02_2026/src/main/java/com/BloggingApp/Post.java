@@ -1,47 +1,36 @@
 package com.BloggingApp;
 
-import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "post")
 public class Post {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String title;
+    private String content;
+    private String createdAt;  
+    private String updatedAt;   
+    @ManyToOne
+    private Users author;
 
-	private String title;
-	private String content;
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-	@ManyToOne
-	private User author;
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-	@OneToMany
-	private List<Comment> comments;
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 
-	public Post() {
-	}
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
-	public Post(String title, String content, User author) {
-		this.title = title;
-		this.content = content;
-		this.author = author;
-	}
+    public String getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(String updatedAt) { this.updatedAt = updatedAt; }
 
-	public String getTitle() {
-	    return title;
-	}
-
-	public int getId() {
-	    return id;
-	}
-	
+    public Users getAuthor() { return author; }
+    public void setAuthor(Users author) { this.author = author; }
 }
