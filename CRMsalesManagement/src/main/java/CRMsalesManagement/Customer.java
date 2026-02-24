@@ -1,28 +1,38 @@
 package CRMsalesManagement;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Customer {
-@Id
-	private int id;
-	private String name;
-	private String email;
-	private int phone;
-	private Address ad;
-	
-	@OneToMany
-	private List<Order> orders;
 
-	public int getId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private String email;
+    private String phone;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Order> orders = new ArrayList<>();
+
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -42,20 +52,20 @@ public class Customer {
 		this.email = email;
 	}
 
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
-	public Address getAd() {
-		return ad;
+	public Address getAddress() {
+		return address;
 	}
 
-	public void setAd(Address ad) {
-		this.ad = ad;
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public List<Order> getOrders() {
@@ -65,6 +75,6 @@ public class Customer {
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
-	
-	
+    
+    
 }

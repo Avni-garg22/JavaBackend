@@ -3,9 +3,9 @@ package Main;
 
 import javax.persistence.*;
 
-import com.BloggingApp.Comment;
-import com.BloggingApp.Post;
-import com.BloggingApp.Users;
+import com.BloggingPractice.Comment;
+import com.BloggingPractice.Post;
+import com.BloggingPractice.Users;
 
 import java.util.Scanner;
 
@@ -16,19 +16,19 @@ public class App{
         EntityTransaction et = em.getTransaction();
 
         Users u1 = new Users();
-        u1.setName("Avni");
-        u1.setPassword("123avni");
-        u1.setEmail("avi123@gmail.com");
+        u1.setName("Yash");
+        u1.setPassword("12Yash34");
+        u1.setEmail("yash@gmail.com");
 
         Post p1 = new Post();
-        p1.setTitle("Java Learn");
-        p1.setContent("Advance java is Interesting!!");
-        p1.setCreatedAt("22-11-2025");
+        p1.setTitle("My Life");
+        p1.setContent("Learning advance java now-a-days!!");
+        p1.setCreatedAt("01-01-2023");
         p1.setUpdatedAt("16-02-2026");
         p1.setAuthor(u1);
 
         Comment c1 = new Comment();
-        c1.setContent("great-post!");
+        c1.setContent("Interesting one!");
         c1.setCreatedAt("16-02-2026");
         c1.setPost(p1);
         c1.setAuthor(u1);

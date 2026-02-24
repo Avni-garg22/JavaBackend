@@ -1,4 +1,4 @@
-package com.BloggingApp;
+package com.BloggingPractice;
 
 
 import javax.persistence.*;
