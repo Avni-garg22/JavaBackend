@@ -7,7 +7,7 @@ public class JPAUtil {
 	private static final EntityManagerFactory emf;
 
 	static {
-		emf = Persistence.createEntityManagerFactory("fintech-pu");
+		emf = Persistence.createEntityManagerFactory("postgres");
 	}
 
 	public static EntityManager getEntityManager() {
